@@ -1,0 +1,20 @@
+.userRow {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  border-radius: var(--bigBorderRadius);
+  border: none;
+  background-color: #ffffff;
+  cursor: pointer;
+  box-shadow: var(--defaultBoxShadow);
+  padding: var(--baseSizingUnit);
+  margin-bottom: var(--baseSizingUnit);
+}
+
+.userAvatar {
+  height: 35px;
+  width: 35px;
+  border-radius: var(--smallBorderRadius);
+  margin-right: var(--baseSizingUnit);
+}
+

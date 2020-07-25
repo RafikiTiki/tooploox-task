@@ -1,11 +1,14 @@
 .appHeader {
+  position: fixed;
+  width: 100%;
+  top: 0;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 84px;
+  height: var(--headerHeight);
   background-color: #ffffff;
-  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--defaultBoxShadow);
 }
 
 .inputWrapper {
@@ -27,7 +30,7 @@
   border: none;
   background-color: #F0F3F4;
   padding: 10px 10px 10px 32px;
-  margin-right: 16px;
+  margin-right: var(--baseSizingUnit);
   font-size: 14px;
   line-height: 16px;
   color: #4F4F4F;

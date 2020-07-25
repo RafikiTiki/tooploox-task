@@ -1,10 +1,4 @@
-import React, {
-  MouseEvent,
-  ChangeEvent,
-  useCallback,
-  useState,
-  FormEvent,
-} from 'react';
+import React, { ChangeEvent, useState, FormEvent } from 'react';
 import styles from './styles.module.css';
 
 type PropTypes = {
