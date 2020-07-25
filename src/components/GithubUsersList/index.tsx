@@ -3,6 +3,7 @@ import { GithubUserBaseData } from '../../api/types';
 import GithubUserRow from '../GithubUserRow';
 import styles from './styles.module.css';
 import EmptyUsersListPlaceholder from '../EmptyUsersListPlaceholder';
+import { SearchUsersLoader } from '../loaders';
 
 type PropTypes = {
   isLoading: boolean;
@@ -10,7 +11,19 @@ type PropTypes = {
   onClickRow: (userId: number) => void;
 };
 
-const GithubUsersList: React.FC<PropTypes> = ({ users, onClickRow }) => {
+const GithubUsersList: React.FC<PropTypes> = ({
+  users,
+  onClickRow,
+  isLoading,
+}) => {
+  if (isLoading) {
+    return (
+      <div className={styles.loaderWrapper}>
+        <SearchUsersLoader />
+      </div>
+    );
+  }
+
   if (users.length === 0) {
     return <EmptyUsersListPlaceholder />;
   }
