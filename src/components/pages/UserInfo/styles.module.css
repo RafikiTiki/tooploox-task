@@ -5,10 +5,9 @@
 }
 
 .userInfoWrapper {
-  display: flex;
-  flex-direction: column;
-  padding: 0 20%;
+  width: 60%;
   max-width: var(--maxWidth);
+  margin: var(--baseSizingUnit) auto 0;
 }
 
 .userInfoHeader {

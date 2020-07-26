@@ -73,7 +73,11 @@ const UserInfo: React.FC = () => {
         <ul className={styles.userReposList}>
           {reposData.map((repo) => (
             <li key={repo.id} className={styles.repoItem}>
-              <a className={styles.repoLink} href={repo.html_url}>
+              <a
+                className={styles.repoLink}
+                href={repo.html_url}
+                target="_blank"
+                rel="noreferrer">
                 {repo.name}
               </a>
             </li>

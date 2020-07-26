@@ -1,6 +1,7 @@
 .userRow {
+  width: 60%;
+  margin: 0 auto;
   display: flex;
-  width: 100%;
   align-items: center;
   border-radius: var(--bigBorderRadius);
   border: none;

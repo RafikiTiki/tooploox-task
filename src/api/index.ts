@@ -1,4 +1,3 @@
-import parseLinkHeader from 'parse-link-header';
 import {
   FetchPageableUserRepos,
   GithubApiResponse,
@@ -7,20 +6,26 @@ import {
   GithubUserBaseData,
 } from './types';
 import { Maybe } from '../commonTypes';
+import { getNextPage } from './utils';
 
 const API_ROOT = 'https://api.github.com';
 
 export async function searchGithubUsers(
   searchPhrase: string,
+  page?: string,
 ): Promise<GithubApiResponse<GithubUserBaseData[]>> {
   try {
     const query = encodeURIComponent(`${searchPhrase} in:fullname`);
-    const response = await fetch(`${API_ROOT}/search/users?q=${query}`);
+    const url = `${API_ROOT}/search/users?q=${query}${
+      page ? `&page=${page}` : ''
+    }`;
+    const response = await fetch(url);
     const data = await response.json();
 
     return {
       data: data.items || [],
       error: data.message || null,
+      nextPage: getNextPage(response),
     };
   } catch (error) {
     console.error(error);
@@ -62,13 +67,11 @@ async function fetchUserReposPage(
   }`;
   const response = await fetch(url);
   const data = await response.json();
-  const linkHeader = response.headers.get('link');
-  const pagination = linkHeader ? parseLinkHeader(linkHeader) : null;
 
   return {
     data,
     errorMessage: data.message,
-    nextPage: pagination?.next?.page,
+    nextPage: getNextPage(response),
   };
 }
 

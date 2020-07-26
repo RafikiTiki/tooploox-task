@@ -22,6 +22,7 @@ export interface GithubUser extends GithubUserBaseData {
 export type GithubApiResponse<T> = {
   data: T;
   error: string | null;
+  nextPage?: string;
 };
 
 export type FetchPageableUserRepos = {

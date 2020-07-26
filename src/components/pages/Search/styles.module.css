@@ -1,0 +1,3 @@
+.searchResultsWrapper {
+  height: calc(100vh - var(--headerHeight));
+}

@@ -13,16 +13,14 @@ const GithubUserRow: React.FC<PropTypes> = ({ user }) => {
     history.push(`/user/${user.login}`);
   };
   return (
-    <li>
-      <button className={styles.userRow} type="button" onClick={onClick}>
-        <img
-          className={styles.userAvatar}
-          alt="User Avatar"
-          src={user.avatar_url}
-        />
-        <span>{user.login}</span>
-      </button>
-    </li>
+    <button className={styles.userRow} type="button" onClick={onClick}>
+      <img
+        className={styles.userAvatar}
+        alt="User Avatar"
+        src={user.avatar_url}
+      />
+      <span>{user.login}</span>
+    </button>
   );
 };
 
