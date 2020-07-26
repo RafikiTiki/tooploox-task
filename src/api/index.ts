@@ -37,7 +37,7 @@ export async function fetchUserData(
     const data = await response.json();
 
     return {
-      data: data.items || null,
+      data: data || null,
       error: data.message || null,
     };
   } catch (error) {
@@ -57,7 +57,7 @@ export async function fetchUserRepos(
     const data = await response.json();
 
     return {
-      data: data.items || [],
+      data: data || [],
       error: data.message || null,
     };
   } catch (error) {

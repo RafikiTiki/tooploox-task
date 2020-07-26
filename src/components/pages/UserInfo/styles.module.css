@@ -1,0 +1,59 @@
+.loaderWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.userInfoWrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20%;
+  max-width: var(--maxWidth);
+}
+
+.userInfoHeader {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: var(--baseSizingUnit);
+}
+
+.userAvatar {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--bigBorderRadius);
+  margin-right: var(--baseSizingUnit);
+}
+
+.headingText {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.userBio {
+  font-size: 14px;
+  line-height: 19px;
+  color: #828282;
+  margin: 0 0 calc(2 * var(--baseSizingUnit));
+}
+
+.userReposList {
+  margin: var(--baseSizingUnit) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.repoItem {
+  border-radius: var(--bigBorderRadius);
+  box-shadow: var(--defaultBoxShadow);
+  padding: var(--baseSizingUnit);
+  background-color: #ffffff;
+  margin-bottom: var(--baseSizingUnit);
+}
+
+.repoLink {
+  color: #2F80ED;
+  font-size: 14px;
+  line-height: 16px;
+  text-decoration: none;
+}

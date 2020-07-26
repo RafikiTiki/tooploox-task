@@ -1,16 +1,17 @@
-import React, { useCallback } from 'react';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 import styles from './styles.module.css';
 import { GithubUserBaseData } from '../../api/types';
 
 type PropTypes = {
   user: GithubUserBaseData;
-  onClickRow: (userId: number) => void;
 };
 
-const GithubUserRow: React.FC<PropTypes> = ({ user, onClickRow }) => {
-  const onClick = useCallback(() => {
-    onClickRow(user.id);
-  }, [user.id, onClickRow]);
+const GithubUserRow: React.FC<PropTypes> = ({ user }) => {
+  const history = useHistory();
+  const onClick = () => {
+    history.push(`/user/${user.login}`);
+  };
   return (
     <li>
       <button className={styles.userRow} type="button" onClick={onClick}>

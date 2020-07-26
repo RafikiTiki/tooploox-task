@@ -8,14 +8,10 @@ import { SearchUsersLoader } from '../loaders';
 type PropTypes = {
   isLoading: boolean;
   users: GithubUserBaseData[];
-  onClickRow: (userId: number) => void;
+  // onClickRow: (userId: number) => void;
 };
 
-const GithubUsersList: React.FC<PropTypes> = ({
-  users,
-  onClickRow,
-  isLoading,
-}) => {
+const GithubUsersList: React.FC<PropTypes> = ({ users, isLoading }) => {
   if (isLoading) {
     return (
       <div className={styles.loaderWrapper}>
@@ -30,7 +26,7 @@ const GithubUsersList: React.FC<PropTypes> = ({
   return (
     <ul className={styles.usersList}>
       {users.map((user) => (
-        <GithubUserRow user={user} key={user.id} onClickRow={onClickRow} />
+        <GithubUserRow user={user} key={user.id} />
       ))}
     </ul>
   );

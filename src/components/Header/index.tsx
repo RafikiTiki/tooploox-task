@@ -1,16 +1,14 @@
 import React, { ChangeEvent, useState, FormEvent } from 'react';
+import { useHistory } from 'react-router-dom';
 import styles from './styles.module.css';
 
-type PropTypes = {
-  onSearch: (searchPhrase: string) => void;
-};
-
-const Header: React.FC<PropTypes> = ({ onSearch }) => {
+const Header: React.FC = () => {
   const [searchPhrase, onSetSearchPhrase] = useState('');
+  const history = useHistory();
 
   const onClickSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSearch(searchPhrase);
+    history.push(`/search/${searchPhrase}`);
   };
 
   const onChangeText = (event: ChangeEvent<HTMLInputElement>) => {
