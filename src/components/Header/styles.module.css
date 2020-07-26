@@ -31,7 +31,8 @@
   background-color: #F0F3F4;
   padding: 10px 10px 10px 32px;
   margin-right: var(--baseSizingUnit);
-  font-size: 14px;
+  font-size: var(--normalFontSize);
+  font-family: var(--defaultFontFamily);
   line-height: 16px;
   color: #4F4F4F;
 }
@@ -45,7 +46,7 @@
   border-radius: var(--smallBorderRadius);
   padding: 12px;
   color: #ffffff;
-  font-size: 12px;
+  font-size: var(--smallFontSize);
   line-height: 12px;
   cursor: pointer;
 }

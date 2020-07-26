@@ -26,12 +26,12 @@
 
 .headingText {
   color: rgba(0, 0, 0, 0.87);
-  font-size: 18px;
+  font-size: var(--headingFontSize);
   line-height: 24px;
 }
 
 .userBio {
-  font-size: 14px;
+  font-size: var(--normalFontSize);
   line-height: 19px;
   color: #828282;
   margin: 0 0 calc(2 * var(--baseSizingUnit));
@@ -53,7 +53,7 @@
 
 .repoLink {
   color: #2F80ED;
-  font-size: 14px;
+  font-size: var(--normalFontSize);
   line-height: 16px;
   text-decoration: none;
 }

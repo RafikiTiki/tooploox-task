@@ -1,6 +1,7 @@
 .app {
   background-color: #E5E5E5;
   min-height: 100vh;
+  font-family: var(--defaultFontFamily);
 }
 
 .content {
