@@ -1,4 +1,6 @@
+import parseLinkHeader from 'parse-link-header';
 import {
+  FetchPageableUserRepos,
   GithubApiResponse,
   GithubRepo,
   GithubUser,
@@ -21,6 +23,7 @@ export async function searchGithubUsers(
       error: data.message || null,
     };
   } catch (error) {
+    console.error(error);
     return {
       data: [],
       error: error.message,
@@ -41,6 +44,7 @@ export async function fetchUserData(
       error: data.message || null,
     };
   } catch (error) {
+    console.error(error);
     return {
       data: null,
       error: error.message,
@@ -48,19 +52,60 @@ export async function fetchUserData(
   }
 }
 
-export async function fetchUserRepos(
+async function fetchUserReposPage(
+  login: string,
+  page?: string,
+): Promise<FetchPageableUserRepos> {
+  const username = encodeURIComponent(login);
+  const url = `${API_ROOT}/users/${username}/repos${
+    page ? `?page=${page}` : ''
+  }`;
+  const response = await fetch(url);
+  const data = await response.json();
+  const linkHeader = response.headers.get('link');
+  const pagination = linkHeader ? parseLinkHeader(linkHeader) : null;
+
+  return {
+    data,
+    errorMessage: data.message,
+    nextPage: pagination?.next?.page,
+  };
+}
+
+export async function fetchUserPopularRepos(
   login: string,
 ): Promise<GithubApiResponse<GithubRepo[]>> {
   try {
-    const username = encodeURIComponent(login);
-    const response = await fetch(`${API_ROOT}/users/${username}/repos`);
-    const data = await response.json();
+    const userRepos: GithubRepo[] = [];
+
+    const reposResponse = await fetchUserReposPage(login);
+    const { data } = reposResponse;
+    let { errorMessage, nextPage } = reposResponse;
+
+    userRepos.push(...data);
+
+    while (nextPage) {
+      // eslint-disable-next-line no-await-in-loop
+      const nextReposResponse = await fetchUserReposPage(login, nextPage);
+      const {
+        data: nextData,
+        errorMessage: nextErrorMessage,
+      } = nextReposResponse;
+      userRepos.push(...nextData);
+      errorMessage = nextErrorMessage;
+      nextPage = nextReposResponse.nextPage;
+    }
+
+    const mostPopularUserRepos = userRepos
+      .sort((a, b) => b.stargazers_count - a.stargazers_count)
+      .slice(0, 3);
 
     return {
-      data: data || [],
-      error: data.message || null,
+      data: mostPopularUserRepos || [],
+      error: errorMessage || null,
     };
   } catch (error) {
+    console.error(error);
     return {
       data: [],
       error: error.message,

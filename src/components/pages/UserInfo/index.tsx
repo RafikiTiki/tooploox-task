@@ -5,7 +5,7 @@ import { Maybe } from '../../../commonTypes';
 import styles from './styles.module.css';
 import { SearchUsersLoader } from '../../loaders';
 import EmptyUsersListPlaceholder from '../../EmptyUsersListPlaceholder';
-import { fetchUserData, fetchUserRepos } from '../../../api';
+import { fetchUserData, fetchUserPopularRepos } from '../../../api';
 
 const UserInfo: React.FC = () => {
   const { login } = useParams();
@@ -25,7 +25,7 @@ const UserInfo: React.FC = () => {
 
   const onFetchUserReposData = useCallback(async () => {
     onSetIsGetUserReposLoading(true);
-    const result = await fetchUserRepos(login);
+    const result = await fetchUserPopularRepos(login);
     onSetReposData(result.data);
     onSetIsGetUserReposLoading(false);
   }, [login]);
@@ -34,11 +34,6 @@ const UserInfo: React.FC = () => {
     onFetchUserData();
     onFetchUserReposData();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    onFetchUserData();
-    onFetchUserReposData();
-  }, [onFetchUserData, onFetchUserReposData]);
 
   if (isGetUserLoading) {
     return (

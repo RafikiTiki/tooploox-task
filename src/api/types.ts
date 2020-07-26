@@ -1,7 +1,11 @@
+import { Links } from 'parse-link-header';
+import { Maybe } from '../commonTypes';
+
 export type GithubRepo = {
   id: number;
   name: string;
   html_url: string;
+  stargazers_count: number;
 };
 
 export interface GithubUserBaseData {
@@ -18,4 +22,10 @@ export interface GithubUser extends GithubUserBaseData {
 export type GithubApiResponse<T> = {
   data: T;
   error: string | null;
+};
+
+export type FetchPageableUserRepos = {
+  data: GithubRepo[];
+  errorMessage?: string;
+  nextPage?: string;
 };

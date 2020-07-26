@@ -20,10 +20,6 @@ const Search: React.FC = () => {
     onSearch();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
-    onSearch();
-  }, [onSearch]);
-
   return <GithubUsersList isLoading={isSearchUsersLoading} users={usersData} />;
 };
 
