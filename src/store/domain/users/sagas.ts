@@ -20,8 +20,8 @@ export function* onSearchUsers(action: Action<OnSearchUsersPayload>) {
       RequestActions.onSetRequestStatus(requestType, RequestStatus.LOADING),
     );
     const { searchPhrase, isInitialSearch } = action.payload;
-    let page;
 
+    let page;
     if (isInitialSearch) {
       page = 1;
     } else {

@@ -7,7 +7,7 @@ import * as UsersConstants from './constants';
 import { OnBatchUsersBaseDataPayload } from './actionPayloads';
 import { UserBaseDataRecordInterface } from './models';
 
-export type UsersBaseDataSlice = Map<string, UserBaseDataRecordInterface>;
+export type UsersBaseDataSlice = Map<number, UserBaseDataRecordInterface>;
 
 export interface UsersState extends Map<string, any> {
   usersBaseData: UsersBaseDataSlice;

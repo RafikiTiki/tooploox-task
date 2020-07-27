@@ -1,17 +1,19 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './styles.module.css';
-import { GithubUserBaseDataInterface } from '../../api/types';
+import { useGithubUserBaseData } from './hook';
 
 type PropTypes = {
-  user: GithubUserBaseDataInterface;
+  userId: number;
 };
 
-const GithubUserRow: React.FC<PropTypes> = ({ user }) => {
+const GithubUserRow: React.FC<PropTypes> = ({ userId }) => {
+  const user = useGithubUserBaseData(userId);
   const history = useHistory();
   const onClick = () => {
     history.push(`/user/${user.login}`);
   };
+
   return (
     <button className={styles.userRow} type="button" onClick={onClick}>
       <img
@@ -24,4 +26,4 @@ const GithubUserRow: React.FC<PropTypes> = ({ user }) => {
   );
 };
 
-export default GithubUserRow;
+export default React.memo(GithubUserRow);

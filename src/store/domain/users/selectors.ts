@@ -1,7 +1,8 @@
+import { createSelector } from 'reselect';
+import createCachedSelector from 're-reselect';
 import { RootState } from '../../index';
 import { UsersBaseDataSlice, UsersState } from './reducer';
 import { domain as UsersDomain } from './constants';
-import { createSelector } from 'reselect';
 
 export const selectUsersDomain = (state: RootState): UsersState =>
   state.get(UsersDomain);
@@ -16,7 +17,9 @@ export const selectSearchUserIds = createSelector(
   (usersBaseData) => usersBaseData.keySeq().toList(),
 );
 
-export const selectSearchUsersData = createSelector(
+// args: userId
+export const selectGithubUserBaseData = createCachedSelector(
   selectUsersBaseDataDomain,
-  (usersBaseData) => usersBaseData.valueSeq().toList(),
-);
+  (_: RootState, userId: number) => userId,
+  (usersBaseData, userId) => usersBaseData.get(userId),
+)((_, userId) => userId);

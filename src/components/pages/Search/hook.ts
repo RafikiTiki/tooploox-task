@@ -3,33 +3,33 @@ import { List } from 'immutable';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import useTypedSelector from '../../../store/useTypedSelector';
-import { UserBaseDataRecordInterface } from '../../../store/domain/users/models';
 import {
   selectIsRequestLoading,
   selectRequestNextPage,
 } from '../../../store/domain/requests/selectors';
 import RequestType from '../../../store/domain/requests/requestType';
-import { selectSearchUsersData } from '../../../store/domain/users/selectors';
+import { selectSearchUserIds } from '../../../store/domain/users/selectors';
 import { onSearchUsers } from '../../../store/domain/users/actions';
 
 export type SearchHook = {
   isLoading: boolean;
   hasNextPage: boolean;
-  usersData: List<UserBaseDataRecordInterface>;
+  userIds: List<number>;
   onFetchMoreUsersData: VoidFunction;
 };
 
 export const useSearchComponent = (): SearchHook => {
   const { searchPhrase } = useParams();
-  const dispatch = useDispatch();
+
   const isLoading = useTypedSelector((state) =>
     selectIsRequestLoading(state, RequestType.SEARCH_USERS),
   );
   const nextPage = useTypedSelector((state) =>
     selectRequestNextPage(state, RequestType.SEARCH_USERS),
   );
-  const usersData = useTypedSelector((state) => selectSearchUsersData(state));
+  const userIds = useTypedSelector((state) => selectSearchUserIds(state));
 
+  const dispatch = useDispatch();
   const onFetchMoreUsersData = useCallback(async () => {
     dispatch(onSearchUsers({ searchPhrase, isInitialSearch: false }));
   }, [dispatch, searchPhrase]);
@@ -48,7 +48,7 @@ export const useSearchComponent = (): SearchHook => {
   return {
     isLoading,
     hasNextPage: !!nextPage,
-    usersData,
+    userIds,
     onFetchMoreUsersData,
   };
 };

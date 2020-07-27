@@ -10,19 +10,18 @@ import { List as ImmutableList } from 'immutable';
 import GithubUserRow from '../GithubUserRow';
 import styles from './styles.module.css';
 import EmptyUsersListPlaceholder from '../EmptyUsersListPlaceholder';
-import { UserBaseDataRecordInterface } from '../../store/domain/users/models';
 
 type PropTypes = {
   hasNextPage: boolean;
   isLoading: boolean;
-  users: ImmutableList<UserBaseDataRecordInterface>;
+  userIds: ImmutableList<number>;
   onFetchMoreUsersData: VoidFunction;
 };
 
 const GithubUsersList: React.FC<PropTypes> = ({
-  users,
   isLoading,
   hasNextPage,
+  userIds,
   onFetchMoreUsersData,
 }) => {
   // if (isLoading) {
@@ -33,23 +32,23 @@ const GithubUsersList: React.FC<PropTypes> = ({
   //   );
   // }
 
-  if (users.size === 0) {
+  if (userIds.size === 0) {
     return <EmptyUsersListPlaceholder />;
   }
 
   // react-virtualized specific stuff
-  const rowCount = hasNextPage ? users.size + 1 : users.size;
+  const rowCount = hasNextPage ? userIds.size + 1 : userIds.size;
   const onLoadMoreRows = isLoading ? () => {} : onFetchMoreUsersData;
   const isRowLoaded = ({ index }: Index): boolean =>
-    !hasNextPage || index < users.size;
+    !hasNextPage || index < userIds.size;
   const rowRenderer: ListRowRenderer = ({ index, key, style }) => {
     let content;
 
     if (!isRowLoaded({ index })) {
       content = 'Loading...';
     } else {
-      const user = users.get(index);
-      content = <GithubUserRow user={user} key={user.id} />;
+      const userId = userIds.get(index);
+      content = <GithubUserRow userId={userId} key={userId} />;
     }
 
     return (
@@ -74,7 +73,7 @@ const GithubUsersList: React.FC<PropTypes> = ({
               width={width}
               height={height}
               rowHeight={83}
-              rowCount={users.size}
+              rowCount={userIds.size}
               ref={registerChild}
               onRowsRendered={onRowsRendered}
               rowRenderer={rowRenderer}
