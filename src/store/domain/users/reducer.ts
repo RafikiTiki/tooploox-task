@@ -1,4 +1,4 @@
-import { Map, fromJS } from 'immutable';
+import { Map, List, fromJS } from 'immutable';
 import { Reducer } from 'redux';
 import { GithubUserInterface } from '../../../api/types';
 import { Maybe } from '../../../commonTypes';
@@ -11,11 +11,13 @@ export type UsersBaseDataSlice = Map<number, UserBaseDataRecordInterface>;
 
 export interface UsersState extends Map<string, any> {
   usersBaseData: UsersBaseDataSlice;
+  searchUserIds: List<number>;
   selectedUser: Maybe<GithubUserInterface>;
 }
 
 const initialState: UsersState = fromJS({
   usersBaseData: {},
+  searchUserIds: [],
   selectedUser: null,
 });
 
@@ -26,15 +28,21 @@ export const usersReducer: Reducer<UsersState, Action> = (
   switch (action.type) {
     case UsersConstants.onBatchUsersBaseData: {
       const {
-        payload: { users, isInitialBatch },
+        payload: { users, userIds, isInitialBatch },
       }: Action<OnBatchUsersBaseDataPayload> = action;
 
       if (isInitialBatch) {
-        return <UsersState>state.set('usersBaseData', users);
+        return <UsersState>(
+          state.set('usersBaseData', users).set('searchUserIds', userIds)
+        );
       }
 
       return <UsersState>(
-        state.set('usersBaseData', state.get('usersBaseData').merge(users))
+        state
+          .set('usersBaseData', state.get('usersBaseData').merge(users))
+          .update('searchUserIds', (currentUserIds) =>
+            currentUserIds.concat(userIds),
+          )
       );
     }
 

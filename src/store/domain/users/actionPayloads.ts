@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
 import {
   GithubUserInterface,
   GithubUserBaseDataInterface,
@@ -11,6 +11,7 @@ export type OnSearchUsersPayload = {
 
 export type OnBatchUsersBaseDataPayload = {
   users: Map<number, GithubUserBaseDataInterface>;
+  userIds: List<number>;
   isInitialBatch?: boolean;
 };
 

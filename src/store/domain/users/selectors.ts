@@ -1,3 +1,4 @@
+import { List } from 'immutable';
 import { createSelector } from 'reselect';
 import createCachedSelector from 're-reselect';
 import { RootState } from '../../index';
@@ -13,8 +14,8 @@ export const selectUsersBaseDataDomain = createSelector(
 );
 
 export const selectSearchUserIds = createSelector(
-  selectUsersBaseDataDomain,
-  (usersBaseData) => usersBaseData.keySeq().toList(),
+  selectUsersDomain,
+  (domain) => domain.get('searchUserIds') as List<number>,
 );
 
 // args: userId

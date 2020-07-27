@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import { List, Map } from 'immutable';
 import { call, put, takeLatest, select } from 'redux-saga/effects';
 import pick from 'lodash/pick';
 import * as UsersConstants from './constants';
@@ -36,16 +36,19 @@ export function* onSearchUsers(action: Action<OnSearchUsersPayload>) {
       );
 
       let usersBaseData: Map<number, GithubUserBaseDataInterface> = Map();
+      let userIds: List<number> = List();
 
       data.items.forEach((githubUser: GithubUserBaseDataInterface) => {
         const userBaseData = pick(githubUser, ['id', 'login', 'avatar_url']);
         const userRecord = GithubUser(userBaseData);
         usersBaseData = usersBaseData.set(userBaseData.id, userRecord);
+        userIds = userIds.push(userBaseData.id);
       });
 
       yield put(
         onBatchUsersBaseData({
           users: usersBaseData,
+          userIds,
           isInitialBatch: isInitialSearch,
         }),
       );
