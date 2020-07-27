@@ -25,7 +25,7 @@ export function* onSearchUsers(action: Action<OnSearchUsersPayload>) {
     if (isInitialSearch) {
       page = 1;
     } else {
-      page = yield select(selectRequestNextPage, { requestType });
+      page = yield select(selectRequestNextPage, requestType);
     }
 
     if (page) {

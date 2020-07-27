@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { createCachedSelector } from 're-reselect';
 import { domain as RequestsDomain } from './constants';
 import { RootState } from '../../index';
 import { RequestNextPageMap, RequestsState, RequestStatusMap } from './reducer';
@@ -18,22 +19,23 @@ export const selectRequestNextPageDomain = createSelector(
   (domain) => domain.get('requestNextPage') as RequestNextPageMap,
 );
 
-export const selectRequestStatus = createSelector(
+// args: requestType
+export const selectRequestStatus = createCachedSelector(
   selectRequestStatusDomain,
-  (_: RootState, args: { requestType: RequestType }) => args.requestType,
+  (_: RootState, requestType: RequestType) => requestType,
   (requestStatusMap, requestType) => requestStatusMap.get(requestType),
-);
+)((_, requestType) => requestType);
 
 // args: requestType
-export const selectIsRequestLoading = createSelector(
+export const selectIsRequestLoading = createCachedSelector(
   selectRequestStatus,
   (requestStatus) => requestStatus === RequestStatus.LOADING,
-);
+)((_, requestType) => requestType);
 
 // args: requestType
-export const selectRequestNextPage = createSelector(
+export const selectRequestNextPage = createCachedSelector(
   selectRequestNextPageDomain,
-  (_: RootState, args: { requestType: RequestType }) => args.requestType,
+  (_: RootState, requestType: RequestType) => requestType,
   (requestNextPageDomain, requestType) =>
     requestNextPageDomain.get(requestType),
-);
+)((_, requestType) => requestType);
