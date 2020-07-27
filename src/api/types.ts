@@ -1,7 +1,7 @@
 import { Links } from 'parse-link-header';
 import { Maybe } from '../commonTypes';
 
-export type GithubRepo = {
+export type GithubRepoInterface = {
   id: number;
   name: string;
   html_url: string;
@@ -26,7 +26,7 @@ export type GithubApiResponse<T> = {
 };
 
 export type FetchPageableUserRepos = {
-  data: GithubRepo[];
+  data: GithubRepoInterface[];
   errorMessage?: string;
   nextPage?: string;
 };

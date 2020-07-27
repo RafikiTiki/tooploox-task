@@ -1,12 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { GithubRepo, GithubUserInterface } from '../../../api/types';
+import { useDispatch } from 'react-redux';
+import { GithubRepoInterface, GithubUserInterface } from '../../../api/types';
 import { Maybe } from '../../../commonTypes';
 import styles from './styles.module.css';
 import { SearchUsersLoader } from '../../loaders';
 import EmptyUsersListPlaceholder from '../../EmptyUsersListPlaceholder';
 import { fetchUserData, fetchUserPopularRepos } from '../../../api';
 import { getUserFirstAndLastName } from '../../../utils';
+import { onFetchUserPopularRepositories } from '../../../store/domain/repositories/actions';
 
 const UserInfo: React.FC = () => {
   const { login } = useParams();
@@ -21,20 +23,22 @@ const UserInfo: React.FC = () => {
     onSetIsGetUserLoading(false);
   }, [login]);
 
-  const [reposData, onSetReposData] = useState<GithubRepo[]>([]);
+  const [reposData, onSetReposData] = useState<GithubRepoInterface[]>([]);
   const [isGetUserReposLoading, onSetIsGetUserReposLoading] = useState(false);
 
+  const dispatch = useDispatch();
   const onFetchUserReposData = useCallback(async () => {
+    dispatch(onFetchUserPopularRepositories({ login }));
     onSetIsGetUserReposLoading(true);
     const result = await fetchUserPopularRepos(login);
     onSetReposData(result.data);
     onSetIsGetUserReposLoading(false);
-  }, [login]);
+  }, [dispatch, login]);
 
   useEffect(() => {
     onFetchUserData();
     onFetchUserReposData();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [login]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (isGetUserLoading) {
     return (

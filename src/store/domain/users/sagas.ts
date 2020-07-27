@@ -13,13 +13,14 @@ import RequestStatus from '../requests/requestStatus';
 import { selectRequestNextPage } from '../requests/selectors';
 import { GithubUser } from './models';
 
-export function* onSearchUsers(action: Action<OnSearchUsersPayload>) {
+export function* onSearchUsers({
+  payload: { searchPhrase, isInitialSearch },
+}: Action<OnSearchUsersPayload>) {
   const requestType = RequestType.SEARCH_USERS;
   try {
     yield put(
       RequestActions.onSetRequestStatus(requestType, RequestStatus.LOADING),
     );
-    const { searchPhrase, isInitialSearch } = action.payload;
 
     let page;
     if (isInitialSearch) {
@@ -62,7 +63,7 @@ export function* onSearchUsers(action: Action<OnSearchUsersPayload>) {
     console.error(error);
     yield put(
       RequestActions.onSetRequestStatus(
-        RequestType.SEARCH_USERS,
+        requestType,
         RequestStatus.FAILURE,
         error,
       ),

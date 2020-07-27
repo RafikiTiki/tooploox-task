@@ -1,7 +1,7 @@
 import {
   FetchPageableUserRepos,
   GithubApiResponse,
-  GithubRepo,
+  GithubRepoInterface,
   GithubUserInterface,
   GithubUserBaseDataInterface,
 } from './types';
@@ -69,7 +69,7 @@ export async function fetchUserData(
   }
 }
 
-async function fetchUserReposPage(
+export async function fetchUserReposPage(
   login: string,
   page?: string,
 ): Promise<FetchPageableUserRepos> {
@@ -78,20 +78,14 @@ async function fetchUserReposPage(
     page ? `?page=${page}` : ''
   }`;
   const response = await fetch(url);
-  const data = await response.json();
-
-  return {
-    data,
-    errorMessage: data.message,
-    nextPage: getNextPage(response),
-  };
+  return processResponse(response);
 }
 
 export async function fetchUserPopularRepos(
   login: string,
-): Promise<GithubApiResponse<GithubRepo[]>> {
+): Promise<GithubApiResponse<GithubRepoInterface[]>> {
   try {
-    const userRepos: GithubRepo[] = [];
+    const userRepos: GithubRepoInterface[] = [];
 
     const reposResponse = await fetchUserReposPage(login);
     const { data } = reposResponse;
