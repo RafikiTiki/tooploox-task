@@ -1,10 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './styles.module.css';
-import { GithubUserBaseData } from '../../api/types';
+import { GithubUserBaseDataInterface } from '../../api/types';
 
 type PropTypes = {
-  user: GithubUserBaseData;
+  user: GithubUserBaseDataInterface;
 };
 
 const GithubUserRow: React.FC<PropTypes> = ({ user }) => {

@@ -2,22 +2,20 @@ import React from 'react';
 import {
   InfiniteLoader,
   List,
-  WindowScroller,
   AutoSizer,
   Index,
+  ListRowRenderer,
 } from 'react-virtualized';
-import { GithubUserBaseData } from '../../api/types';
+import { List as ImmutableList } from 'immutable';
 import GithubUserRow from '../GithubUserRow';
 import styles from './styles.module.css';
 import EmptyUsersListPlaceholder from '../EmptyUsersListPlaceholder';
-import { SearchUsersLoader } from '../loaders';
-import { ListRowRenderer } from 'react-virtualized/dist/es/List';
+import { UserBaseDataRecordInterface } from '../../store/domain/users/models';
 
 type PropTypes = {
   hasNextPage: boolean;
   isLoading: boolean;
-  isLoadingNextPage: boolean;
-  users: GithubUserBaseData[];
+  users: ImmutableList<UserBaseDataRecordInterface>;
   onFetchMoreUsersData: VoidFunction;
 };
 
@@ -25,33 +23,32 @@ const GithubUsersList: React.FC<PropTypes> = ({
   users,
   isLoading,
   hasNextPage,
-  isLoadingNextPage,
   onFetchMoreUsersData,
 }) => {
-  if (isLoading) {
-    return (
-      <div className={styles.loaderWrapper}>
-        <SearchUsersLoader />
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className={styles.loaderWrapper}>
+  //       <SearchUsersLoader />
+  //     </div>
+  //   );
+  // }
 
-  if (users.length === 0) {
+  if (users.size === 0) {
     return <EmptyUsersListPlaceholder />;
   }
 
   // react-virtualized specific stuff
-  const rowCount = hasNextPage ? users.length + 1 : users.length;
-  const onLoadMoreRows = isLoadingNextPage ? () => {} : onFetchMoreUsersData;
+  const rowCount = hasNextPage ? users.size + 1 : users.size;
+  const onLoadMoreRows = isLoading ? () => {} : onFetchMoreUsersData;
   const isRowLoaded = ({ index }: Index): boolean =>
-    !hasNextPage || index < users.length;
+    !hasNextPage || index < users.size;
   const rowRenderer: ListRowRenderer = ({ index, key, style }) => {
     let content;
 
     if (!isRowLoaded({ index })) {
       content = 'Loading...';
     } else {
-      const user = users[index];
+      const user = users.get(index);
       content = <GithubUserRow user={user} key={user.id} />;
     }
 
@@ -77,7 +74,7 @@ const GithubUsersList: React.FC<PropTypes> = ({
               width={width}
               height={height}
               rowHeight={83}
-              rowCount={users.length}
+              rowCount={users.size}
               ref={registerChild}
               onRowsRendered={onRowsRendered}
               rowRenderer={rowRenderer}

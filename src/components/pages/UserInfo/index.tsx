@@ -1,16 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { GithubRepo, GithubUser } from '../../../api/types';
+import { GithubRepo, GithubUserInterface } from '../../../api/types';
 import { Maybe } from '../../../commonTypes';
 import styles from './styles.module.css';
 import { SearchUsersLoader } from '../../loaders';
 import EmptyUsersListPlaceholder from '../../EmptyUsersListPlaceholder';
 import { fetchUserData, fetchUserPopularRepos } from '../../../api';
+import { getUserFirstAndLastName } from '../../../utils';
 
 const UserInfo: React.FC = () => {
   const { login } = useParams();
 
-  const [userData, onSetUserData] = useState<Maybe<GithubUser>>(null);
+  const [userData, onSetUserData] = useState<Maybe<GithubUserInterface>>(null);
   const [isGetUserLoading, onSetIsGetUserLoading] = useState(false);
 
   const onFetchUserData = useCallback(async () => {
@@ -47,7 +48,7 @@ const UserInfo: React.FC = () => {
     return <EmptyUsersListPlaceholder />;
   }
 
-  const [firstName, lastName] = userData.name.split(' ');
+  const { firstName, lastName } = getUserFirstAndLastName(userData.name);
 
   return (
     <div className={styles.userInfoWrapper}>

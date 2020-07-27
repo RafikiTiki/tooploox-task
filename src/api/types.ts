@@ -8,20 +8,20 @@ export type GithubRepo = {
   stargazers_count: number;
 };
 
-export interface GithubUserBaseData {
+export interface GithubUserBaseDataInterface {
   id: number;
   login: string;
   avatar_url: string;
 }
 
-export interface GithubUser extends GithubUserBaseData {
-  name: string;
-  bio: string;
+export interface GithubUserInterface extends GithubUserBaseDataInterface {
+  name?: string;
+  bio?: string;
 }
 
 export type GithubApiResponse<T> = {
   data: T;
-  error: string | null;
+  error?: string | null;
   nextPage?: string;
 };
 
