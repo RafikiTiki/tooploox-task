@@ -1,32 +1,26 @@
-import { Links } from 'parse-link-header';
-import { Maybe } from '../commonTypes';
-
-export type GithubRepo = {
+export type GithubRepoInterface = {
   id: number;
   name: string;
   html_url: string;
   stargazers_count: number;
 };
 
-export interface GithubUserBaseData {
+export interface GithubUserInterface {
   id: number;
   login: string;
   avatar_url: string;
-}
-
-export interface GithubUser extends GithubUserBaseData {
-  name: string;
-  bio: string;
+  name?: string;
+  bio?: string;
 }
 
 export type GithubApiResponse<T> = {
   data: T;
-  error: string | null;
+  error?: string | null;
   nextPage?: string;
 };
 
 export type FetchPageableUserRepos = {
-  data: GithubRepo[];
+  data: GithubRepoInterface[];
   errorMessage?: string;
   nextPage?: string;
 };

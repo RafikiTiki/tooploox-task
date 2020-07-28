@@ -29,6 +29,8 @@ module.exports = {
     project: './tsconfig.json',
   },
   rules: {
+    'import/no-cycle': [2, { maxDepth: 1 }],
+    'import/prefer-default-export': 0,
     'react/prop-types': 0,
     'linebreak-style': 'off',
     'prettier/prettier': [
