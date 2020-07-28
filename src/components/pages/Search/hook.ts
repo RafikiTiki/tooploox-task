@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import useTypedSelector from '../../../store/useTypedSelector';
 import {
+  selectIsRequestFinished,
   selectIsRequestLoading,
   selectRequestNextPage,
 } from '../../../store/domain/requests/selectors';
@@ -13,6 +14,7 @@ import { onSearchUsers } from '../../../store/domain/users/actions';
 
 export type SearchHook = {
   isLoading: boolean;
+  isRequestFinished: boolean;
   hasNextPage: boolean;
   userIds: List<number>;
   onFetchMoreUsersData: VoidFunction;
@@ -24,6 +26,11 @@ export const useSearchComponent = (): SearchHook => {
   const isLoading = useTypedSelector((state) =>
     selectIsRequestLoading(state, RequestType.SEARCH_USERS),
   );
+
+  const isRequestFinished = useTypedSelector((state) =>
+    selectIsRequestFinished(state, RequestType.SEARCH_USERS),
+  );
+
   const nextPage = useTypedSelector((state) =>
     selectRequestNextPage(state, RequestType.SEARCH_USERS),
   );
@@ -47,6 +54,7 @@ export const useSearchComponent = (): SearchHook => {
 
   return {
     isLoading,
+    isRequestFinished,
     hasNextPage: !!nextPage,
     userIds,
     onFetchMoreUsersData,

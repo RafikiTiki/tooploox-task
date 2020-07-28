@@ -9,31 +9,25 @@ import {
 import { List as ImmutableList } from 'immutable';
 import GithubUserRow from '../GithubUserRow';
 import styles from './styles.module.css';
-import EmptyUsersListPlaceholder from '../EmptyUsersListPlaceholder';
+import EmptyDataPlaceholder from '../EmptyDataPlaceholder';
 
 type PropTypes = {
   hasNextPage: boolean;
   isLoading: boolean;
+  isRequestFinished: boolean;
   userIds: ImmutableList<number>;
   onFetchMoreUsersData: VoidFunction;
 };
 
 const GithubUsersList: React.FC<PropTypes> = ({
   isLoading,
+  isRequestFinished,
   hasNextPage,
   userIds,
   onFetchMoreUsersData,
 }) => {
-  // if (isLoading) {
-  //   return (
-  //     <div className={styles.loaderWrapper}>
-  //       <SearchUsersLoader />
-  //     </div>
-  //   );
-  // }
-
-  if (userIds.size === 0) {
-    return <EmptyUsersListPlaceholder />;
+  if (userIds.size === 0 && isRequestFinished) {
+    return <EmptyDataPlaceholder dataName={'users'} />;
   }
 
   // react-virtualized specific stuff

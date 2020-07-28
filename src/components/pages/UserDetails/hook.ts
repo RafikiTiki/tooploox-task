@@ -5,7 +5,10 @@ import { useCallback, useEffect } from 'react';
 import { GithubUserRecordInterface } from '../../../store/domain/users/models';
 import { GithubRepositoryRecordInterface } from '../../../store/domain/repositories/models';
 import useTypedSelector from '../../../store/useTypedSelector';
-import { selectIsRequestLoading } from '../../../store/domain/requests/selectors';
+import {
+  selectIsRequestFinished,
+  selectIsRequestLoading,
+} from '../../../store/domain/requests/selectors';
 import RequestType from '../../../store/domain/requests/requestType';
 import { selectSelectedUserData } from '../../../store/domain/users/selectors';
 import { selectPopularRepositories } from '../../../store/domain/repositories/selectors';
@@ -14,6 +17,7 @@ import { Maybe } from '../../../commonTypes';
 
 export type UserDetailsHook = {
   isFetchUserDataLoading: boolean;
+  isFetchUserDataFinished: boolean;
   isFetchUserReposLoading: boolean;
   user: Maybe<GithubUserRecordInterface>;
   popularRepos: List<GithubRepositoryRecordInterface>;
@@ -23,6 +27,11 @@ export const useUserDetails = (): UserDetailsHook => {
   const isFetchUserDataLoading = useTypedSelector((state) =>
     selectIsRequestLoading(state, RequestType.FETCH_USER_DATA),
   );
+
+  const isFetchUserDataFinished = useTypedSelector((state) =>
+    selectIsRequestFinished(state, RequestType.FETCH_USER_DATA),
+  );
+
   const isFetchUserReposLoading = useTypedSelector((state) =>
     selectIsRequestLoading(state, RequestType.FETCH_USER_POPULAR_REPOS),
   );
@@ -46,6 +55,7 @@ export const useUserDetails = (): UserDetailsHook => {
 
   return {
     isFetchUserDataLoading,
+    isFetchUserDataFinished,
     isFetchUserReposLoading,
     user,
     popularRepos,

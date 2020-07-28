@@ -1,13 +1,14 @@
 import React from 'react';
 import styles from './styles.module.css';
 import { SearchUsersLoader } from '../../loaders';
-import EmptyUsersListPlaceholder from '../../EmptyUsersListPlaceholder';
+import EmptyDataPlaceholder from '../../EmptyDataPlaceholder';
 import { getUserFirstAndLastName } from '../../../utils';
 import { useUserDetails } from './hook';
 
 const UserDetails: React.FC = () => {
   const {
     isFetchUserDataLoading,
+    isFetchUserDataFinished,
     isFetchUserReposLoading,
     popularRepos,
     user,
@@ -22,7 +23,9 @@ const UserDetails: React.FC = () => {
   }
 
   if (user === null) {
-    return <EmptyUsersListPlaceholder />;
+    return isFetchUserDataFinished ? (
+      <EmptyDataPlaceholder dataName={'user'} />
+    ) : null;
   }
 
   const { firstName, lastName } = getUserFirstAndLastName(user.name);

@@ -7,6 +7,7 @@ const Search: React.FC = () => {
   const {
     hasNextPage,
     isLoading,
+    isRequestFinished,
     userIds,
     onFetchMoreUsersData,
   } = useSearchComponent();
@@ -16,6 +17,7 @@ const Search: React.FC = () => {
       <GithubUsersList
         hasNextPage={hasNextPage}
         isLoading={isLoading}
+        isRequestFinished={isRequestFinished}
         userIds={userIds}
         onFetchMoreUsersData={onFetchMoreUsersData}
       />

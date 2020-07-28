@@ -33,6 +33,14 @@ export const selectIsRequestLoading = createCachedSelector(
 )((_, requestType) => requestType);
 
 // args: requestType
+export const selectIsRequestFinished = createCachedSelector(
+  selectRequestStatus,
+  (requestStatus) =>
+    requestStatus === RequestStatus.FAILURE ||
+    requestStatus === RequestStatus.SUCCESS,
+)((_, requestType) => requestType);
+
+// args: requestType
 export const selectRequestNextPage = createCachedSelector(
   selectRequestNextPageDomain,
   (_: RootState, requestType: RequestType) => requestType,

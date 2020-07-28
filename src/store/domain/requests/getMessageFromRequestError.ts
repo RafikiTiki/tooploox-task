@@ -10,7 +10,6 @@ const getMessageFromRequestError = (
 ): string | null => {
   const parsedStatusCode = Number(statusCode);
   switch (requestType) {
-    case RequestType.FETCH_USER_POPULAR_REPOS:
     case RequestType.FETCH_USER_DATA: {
       switch (parsedStatusCode) {
         case NOT_FOUND: {
