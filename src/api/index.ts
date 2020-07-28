@@ -1,19 +1,17 @@
 import {
   FetchPageableUserRepos,
   GithubApiResponse,
-  GithubRepoInterface,
   GithubUserInterface,
-  GithubUserBaseDataInterface,
 } from './types';
 import { Maybe } from '../commonTypes';
-import { getNextPage, processResponse } from './utils';
+import { processResponse } from './utils';
 
 const API_ROOT = 'https://api.github.com';
 
 export async function searchGithubUsers(
   searchPhrase: string,
   page: string,
-): Promise<GithubApiResponse<GithubUserBaseDataInterface[]>> {
+): Promise<GithubApiResponse<GithubUserInterface[]>> {
   const query = encodeURIComponent(`${searchPhrase} in:fullname`);
   const url = `${API_ROOT}/search/users?q=${query}${
     page ? `&page=${page}` : ''

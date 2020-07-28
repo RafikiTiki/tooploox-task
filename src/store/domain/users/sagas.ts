@@ -8,7 +8,7 @@ import {
   OnSearchUsersPayload,
 } from './actionPayloads';
 import { fetchUserData, searchGithubUsers } from '../../../api';
-import { GithubUserBaseDataInterface } from '../../../api/types';
+import { GithubUserInterface } from '../../../api/types';
 import { onBatchUsersBaseData, onSetSelectedUserData } from './actions';
 import * as RequestActions from '../requests/actions';
 import RequestType from '../requests/requestType';
@@ -40,10 +40,10 @@ export function* onSearchUsers({
         page,
       );
 
-      let usersBaseData: Map<number, GithubUserBaseDataInterface> = Map();
+      let usersBaseData: Map<number, GithubUserInterface> = Map();
       let userIds: List<number> = List();
 
-      data.items.forEach((githubUser: GithubUserBaseDataInterface) => {
+      data.items.forEach((githubUser: GithubUserInterface) => {
         const userBaseData = pick(githubUser, ['id', 'login', 'avatar_url']);
         const userRecord = GithubUser(userBaseData);
         usersBaseData = usersBaseData.set(userBaseData.id, userRecord);

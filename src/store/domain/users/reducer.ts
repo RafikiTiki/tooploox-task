@@ -1,16 +1,12 @@
 import { Map, List, fromJS } from 'immutable';
 import { Reducer } from 'redux';
-import { GithubUserInterface } from '../../../api/types';
 import { Maybe } from '../../../commonTypes';
 import { Action } from '../../types';
 import * as UsersConstants from './constants';
 import { OnBatchUsersBaseDataPayload } from './actionPayloads';
-import {
-  GithubUserRecordInterface,
-  UserBaseDataRecordInterface,
-} from './models';
+import { GithubUserRecordInterface } from './models';
 
-export type UsersBaseDataSlice = Map<number, UserBaseDataRecordInterface>;
+export type UsersBaseDataSlice = Map<number, GithubUserRecordInterface>;
 export type SelectedUserDataSlice = Maybe<GithubUserRecordInterface>;
 
 export interface UsersState extends Map<string, any> {

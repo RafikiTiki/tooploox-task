@@ -3,7 +3,7 @@ import {
   OnBatchUsersBaseDataPayload,
   OnFetchUserDetailsPayload,
   OnSearchUsersPayload,
-  onSetSelectedUserDataPayload,
+  OnSetSelectedUserDataPayload,
 } from './actionPayloads';
 import { Action } from '../../types';
 import createAction from '../../createAction';
@@ -19,8 +19,8 @@ export const onBatchUsersBaseData = (
   createAction(UsersConstants.onBatchUsersBaseData, payload);
 
 export const onSetSelectedUserData = (
-  payload: onSetSelectedUserDataPayload,
-): Action<onSetSelectedUserDataPayload> =>
+  payload: OnSetSelectedUserDataPayload,
+): Action<OnSetSelectedUserDataPayload> =>
   createAction(UsersConstants.onSetSelectedUserData, payload);
 
 export const onFetchUserDetails = (

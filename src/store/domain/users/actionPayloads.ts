@@ -1,8 +1,5 @@
 import { Map, List } from 'immutable';
-import {
-  GithubUserInterface,
-  GithubUserBaseDataInterface,
-} from '../../../api/types';
+import { GithubUserInterface } from '../../../api/types';
 
 export type OnSearchUsersPayload = {
   searchPhrase: string;
@@ -10,12 +7,12 @@ export type OnSearchUsersPayload = {
 };
 
 export type OnBatchUsersBaseDataPayload = {
-  users: Map<number, GithubUserBaseDataInterface>;
+  users: Map<number, GithubUserInterface>;
   userIds: List<number>;
   isInitialBatch?: boolean;
 };
 
-export type onSetSelectedUserDataPayload = {
+export type OnSetSelectedUserDataPayload = {
   user: GithubUserInterface;
 };
 

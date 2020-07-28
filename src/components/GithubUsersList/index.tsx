@@ -27,7 +27,7 @@ const GithubUsersList: React.FC<PropTypes> = ({
   onFetchMoreUsersData,
 }) => {
   if (userIds.size === 0 && isRequestFinished) {
-    return <EmptyDataPlaceholder dataName={'users'} />;
+    return <EmptyDataPlaceholder dataName="users" />;
   }
 
   // react-virtualized specific stuff

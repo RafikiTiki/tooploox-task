@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import useTypedSelector from '../../store/useTypedSelector';
 import { selectAlert } from '../../store/component/alerts/selectors';
-import { useDispatch } from 'react-redux';
 import { onRemoveAlert } from '../../store/component/alerts/actions';
 import xIcon from './x_icon.svg';
 import styles from './styles.module.css';

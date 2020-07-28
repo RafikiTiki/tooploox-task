@@ -1,6 +1,3 @@
-import { Links } from 'parse-link-header';
-import { Maybe } from '../commonTypes';
-
 export type GithubRepoInterface = {
   id: number;
   name: string;
@@ -8,13 +5,10 @@ export type GithubRepoInterface = {
   stargazers_count: number;
 };
 
-export interface GithubUserBaseDataInterface {
+export interface GithubUserInterface {
   id: number;
   login: string;
   avatar_url: string;
-}
-
-export interface GithubUserInterface extends GithubUserBaseDataInterface {
   name?: string;
   bio?: string;
 }

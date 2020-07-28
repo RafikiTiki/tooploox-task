@@ -24,7 +24,7 @@ const UserDetails: React.FC = () => {
 
   if (user === null) {
     return isFetchUserDataFinished ? (
-      <EmptyDataPlaceholder dataName={'user'} />
+      <EmptyDataPlaceholder dataName="user" />
     ) : null;
   }
 
