@@ -1,24 +1,14 @@
-import React, { ChangeEvent, useState, FormEvent } from 'react';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
 import styles from './styles.module.css';
+import { useHeader } from './hook';
 
 const Header: React.FC = () => {
-  const [searchPhrase, onSetSearchPhrase] = useState('');
-  const history = useHistory();
-
-  const onClickSearch = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    history.push(`/search/${searchPhrase}`);
-  };
-
-  const onChangeText = (event: ChangeEvent<HTMLInputElement>) => {
-    onSetSearchPhrase(event.target.value);
-  };
+  const { onChangeText, onSearch, searchPhrase } = useHeader();
 
   return (
     <header className={styles.appHeader}>
       <div className={styles.inputWrapper}>
-        <form onSubmit={onClickSearch}>
+        <form onSubmit={onSearch}>
           <input
             className={styles.input}
             placeholder="Search for users"
