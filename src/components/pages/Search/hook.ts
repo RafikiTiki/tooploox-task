@@ -30,7 +30,7 @@ export const useSearchComponent = (): SearchHook => {
   const userIds = useTypedSelector((state) => selectSearchUserIds(state));
 
   const dispatch = useDispatch();
-  const onFetchMoreUsersData = useCallback(async () => {
+  const onFetchMoreUsersData = useCallback(() => {
     dispatch(onSearchUsers({ searchPhrase, isInitialSearch: false }));
   }, [dispatch, searchPhrase]);
 

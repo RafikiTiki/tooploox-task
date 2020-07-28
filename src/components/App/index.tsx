@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { store } from '../../store';
 import styles from './styles.module.css';
 import Header from '../Header';
-import UserInfo from '../pages/UserInfo';
+import UserDetails from '../pages/UserDetails';
 import Search from '../pages/Search';
 
 const App: React.FC = () => {
@@ -16,7 +16,7 @@ const App: React.FC = () => {
           <div className={styles.content}>
             <Switch>
               <Route path="/search/:searchPhrase" component={Search} />
-              <Route path="/user/:login" component={UserInfo} />
+              <Route path="/user/:login" component={UserDetails} />
             </Switch>
           </div>
         </Router>

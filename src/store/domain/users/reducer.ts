@@ -5,20 +5,24 @@ import { Maybe } from '../../../commonTypes';
 import { Action } from '../../types';
 import * as UsersConstants from './constants';
 import { OnBatchUsersBaseDataPayload } from './actionPayloads';
-import { UserBaseDataRecordInterface } from './models';
+import {
+  GithubUserRecordInterface,
+  UserBaseDataRecordInterface,
+} from './models';
 
 export type UsersBaseDataSlice = Map<number, UserBaseDataRecordInterface>;
+export type SelectedUserDataSlice = Maybe<GithubUserRecordInterface>;
 
 export interface UsersState extends Map<string, any> {
   usersBaseData: UsersBaseDataSlice;
   searchUserIds: List<number>;
-  selectedUser: Maybe<GithubUserInterface>;
+  selectedUserData: SelectedUserDataSlice;
 }
 
 const initialState: UsersState = fromJS({
   usersBaseData: {},
   searchUserIds: [],
-  selectedUser: null,
+  selectedUserData: null,
 });
 
 export const usersReducer: Reducer<UsersState, Action> = (
@@ -46,13 +50,10 @@ export const usersReducer: Reducer<UsersState, Action> = (
       );
     }
 
-    // case UsersConstants.onSetSelectedUser: {
-    //   const { user } = action.payload;
-    //   return {
-    //     ...state,
-    //     selectedUser: user,
-    //   };
-    // }
+    case UsersConstants.onSetSelectedUserData: {
+      const { user } = action.payload;
+      return <UsersState>state.set('selectedUserData', user);
+    }
     default: {
       return state;
     }

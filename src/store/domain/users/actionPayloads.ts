@@ -15,7 +15,7 @@ export type OnBatchUsersBaseDataPayload = {
   isInitialBatch?: boolean;
 };
 
-export type OnSetSelectedUserPayload = {
+export type onSetSelectedUserDataPayload = {
   user: GithubUserInterface;
 };
 

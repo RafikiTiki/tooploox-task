@@ -48,7 +48,11 @@ const GithubUsersList: React.FC<PropTypes> = ({
       content = 'Loading...';
     } else {
       const userId = userIds.get(index);
-      content = <GithubUserRow userId={userId} key={userId} />;
+      if (!userId) {
+        content = 'User not found :(';
+      } else {
+        content = <GithubUserRow userId={userId} key={userId} />;
+      }
     }
 
     return (

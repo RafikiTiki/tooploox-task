@@ -10,6 +10,11 @@ type PropTypes = {
 const GithubUserRow: React.FC<PropTypes> = ({ userId }) => {
   const user = useGithubUserBaseData(userId);
   const history = useHistory();
+
+  if (!user) {
+    return null;
+  }
+
   const onClick = () => {
     history.push(`/user/${user.login}`);
   };

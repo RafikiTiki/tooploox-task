@@ -2,7 +2,11 @@ import { List } from 'immutable';
 import { createSelector } from 'reselect';
 import createCachedSelector from 're-reselect';
 import { RootState } from '../../index';
-import { UsersBaseDataSlice, UsersState } from './reducer';
+import {
+  SelectedUserDataSlice,
+  UsersBaseDataSlice,
+  UsersState,
+} from './reducer';
 import { domain as UsersDomain } from './constants';
 
 export const selectUsersDomain = (state: RootState): UsersState =>
@@ -22,5 +26,10 @@ export const selectSearchUserIds = createSelector(
 export const selectGithubUserBaseData = createCachedSelector(
   selectUsersBaseDataDomain,
   (_: RootState, userId: number) => userId,
-  (usersBaseData, userId) => usersBaseData.get(userId),
+  (usersBaseData, userId) => usersBaseData.get(userId, null),
 )((_, userId) => userId);
+
+export const selectSelectedUserData = createSelector(
+  selectUsersDomain,
+  (domain) => domain.get('selectedUserData') as SelectedUserDataSlice,
+);

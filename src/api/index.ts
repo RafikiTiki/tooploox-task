@@ -51,22 +51,9 @@ export async function searchGithubUsers(
 export async function fetchUserData(
   login: string,
 ): Promise<GithubApiResponse<Maybe<GithubUserInterface>>> {
-  try {
-    const username = encodeURIComponent(login);
-    const response = await fetch(`${API_ROOT}/users/${username}`);
-    const data = await response.json();
-
-    return {
-      data: data || null,
-      error: data.message || null,
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      data: null,
-      error: error.message,
-    };
-  }
+  const username = encodeURIComponent(login);
+  const response = await fetch(`${API_ROOT}/users/${username}`);
+  return processResponse(response);
 }
 
 export async function fetchUserReposPage(
