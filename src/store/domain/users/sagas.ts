@@ -7,7 +7,7 @@ import {
   OnFetchUserDetailsPayload,
   OnSearchUsersPayload,
 } from './actionPayloads';
-import { fetchUserData, searchGithubUsersSaga } from '../../../api';
+import { fetchUserData, searchGithubUsers } from '../../../api';
 import { GithubUserBaseDataInterface } from '../../../api/types';
 import { onBatchUsersBaseData, onSetSelectedUserData } from './actions';
 import * as RequestActions from '../requests/actions';
@@ -35,7 +35,7 @@ export function* onSearchUsers({
 
     if (page) {
       const { nextPage, data } = yield call(
-        searchGithubUsersSaga,
+        searchGithubUsers,
         searchPhrase,
         page,
       );

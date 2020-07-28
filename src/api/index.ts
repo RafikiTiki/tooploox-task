@@ -10,7 +10,7 @@ import { getNextPage, processResponse } from './utils';
 
 const API_ROOT = 'https://api.github.com';
 
-export async function searchGithubUsersSaga(
+export async function searchGithubUsers(
   searchPhrase: string,
   page: string,
 ): Promise<GithubApiResponse<GithubUserBaseDataInterface[]>> {
@@ -20,32 +20,6 @@ export async function searchGithubUsersSaga(
   }`;
   const response = await fetch(url);
   return processResponse(response);
-}
-
-export async function searchGithubUsers(
-  searchPhrase: string,
-  page: string,
-): Promise<GithubApiResponse<GithubUserBaseDataInterface[]>> {
-  try {
-    const query = encodeURIComponent(`${searchPhrase} in:fullname`);
-    const url = `${API_ROOT}/search/users?q=${query}${
-      page ? `&page=${page}` : ''
-    }`;
-    const response = await fetch(url);
-    const data = await response.json();
-
-    return {
-      data: data.items || [],
-      error: data.message || null,
-      nextPage: getNextPage(response),
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      data: [],
-      error: error.message,
-    };
-  }
 }
 
 export async function fetchUserData(
@@ -66,45 +40,4 @@ export async function fetchUserReposPage(
   }`;
   const response = await fetch(url);
   return processResponse(response);
-}
-
-export async function fetchUserPopularRepos(
-  login: string,
-): Promise<GithubApiResponse<GithubRepoInterface[]>> {
-  try {
-    const userRepos: GithubRepoInterface[] = [];
-
-    const reposResponse = await fetchUserReposPage(login);
-    const { data } = reposResponse;
-    let { errorMessage, nextPage } = reposResponse;
-
-    userRepos.push(...data);
-
-    while (nextPage) {
-      // eslint-disable-next-line no-await-in-loop
-      const nextReposResponse = await fetchUserReposPage(login, nextPage);
-      const {
-        data: nextData,
-        errorMessage: nextErrorMessage,
-      } = nextReposResponse;
-      userRepos.push(...nextData);
-      errorMessage = nextErrorMessage;
-      nextPage = nextReposResponse.nextPage;
-    }
-
-    const mostPopularUserRepos = userRepos
-      .sort((a, b) => b.stargazers_count - a.stargazers_count)
-      .slice(0, 3);
-
-    return {
-      data: mostPopularUserRepos || [],
-      error: errorMessage || null,
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      data: [],
-      error: error.message,
-    };
-  }
 }

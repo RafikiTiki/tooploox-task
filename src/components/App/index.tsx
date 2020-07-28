@@ -6,12 +6,14 @@ import styles from './styles.module.css';
 import Header from '../Header';
 import UserDetails from '../pages/UserDetails';
 import Search from '../pages/Search';
+import AlertsList from '../AlertsList';
 
 const App: React.FC = () => {
   return (
     <Provider store={store}>
       <div className={styles.app}>
         <Router>
+          <AlertsList />
           <Header />
           <div className={styles.content}>
             <Switch>

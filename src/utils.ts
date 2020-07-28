@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export const getUserFirstAndLastName = (
   maybeName: string | undefined,
 ): {
@@ -17,3 +19,5 @@ export const getUserFirstAndLastName = (
     lastName,
   };
 };
+
+export const generateId = (): string => uuidv4();

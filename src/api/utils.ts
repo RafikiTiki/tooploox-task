@@ -10,14 +10,14 @@ export const getNextPage = (response: Response): string | undefined => {
   return get(pagination, ['next', 'page']);
 };
 
-export const processResponse = async (
+export const processResponse = async <T>(
   response: Response,
-): Promise<GithubApiResponse<any>> => {
+): Promise<GithubApiResponse<T>> => {
   const nextPage = getNextPage(response);
   const data = await response.json();
 
   if (response.status > 400) {
-    throw new GithubAPIError(response.statusText);
+    throw new GithubAPIError(`${response.status}`);
   }
 
   return {
