@@ -8,7 +8,7 @@ const Header: React.FC = () => {
   return (
     <header className={styles.appHeader}>
       <div className={styles.inputWrapper}>
-        <form onSubmit={onSearch}>
+        <form onSubmit={onSearch} data-testid="search-form">
           <input
             className={styles.input}
             placeholder="Search for users"
