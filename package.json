@@ -16,7 +16,7 @@
     "http-status-codes": "^1.4.0",
     "immutable": "^4.0.0-rc.12",
     "lodash": "^4.17.19",
-    "parse-link-header": "^1.0.1",
+    "parse-link-header": "^2.0.0",
     "re-reselect": "^4.0.0",
     "react": "^16.13.1",
     "react-content-loader": "^5.1.0",
